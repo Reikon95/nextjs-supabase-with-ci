@@ -32,12 +32,16 @@ The migrations workflow runs `supabase link` before it pushes, so the token need
 
 There are two things already set up in the Supabase directory. A migration file, and an edge functions directory. These are designed to show how the setup works.
 
-The migration, `supabase/migrations/20261028232652_setup_profiles.sql`, creates a table for user profiles linked to the inbuilt auth schema, and a function and trigger to create new profile rows automatically when a new user is added. The CLI only applies files named `<timestamp>_<name>.sql`. Add the next change with `supabase migration new <name>`, commit it, and merging to `main` pushes it with `supabase db push`. Once you are using migrations, make schema changes in migration files. Edits in the dashboard SQL editor skip that history, and a later push will fail until the two are back in sync. Supabase's [database migrations](https://supabase.com/docs/guides/deployment/database-migrations) guide covers that.
+The migration file creates a table for user profiles linked to the inbuilt auth schema, and a function and trigger to create new profile rows automatically when a new user is added.
 
-The edge function in `supabase/functions/hello-world` is a small example. It expects a JSON body like `{ "name": "Functions" }` and answers with a hello message. Add another with `supabase functions new <name>` and commit the folder. The next push to `main` deploys every function in the repo. The workflow passes `--prune`, which deletes hosted functions that no longer have a folder here. Remove that flag in `.github/workflows/deploy-functions.yml` if you want to keep those.
+Add the next change with `supabase migration new <name>`, commit it, and merging to `main` will automatically run a pipeline pushes it with `supabase db push`. Once you are using migrations, make schema changes in migration files. Edits in the dashboard SQL editor skip that history, and a later push will fail until the two are back in sync. Supabase's [database migrations](https://supabase.com/docs/guides/deployment/database-migrations) guide covers that.
+
+The edge function in `supabase/functions/hello-world` is a small example. It expects a JSON body like `{ "name": "Functions" }` and answers with a hello message. Add another with `supabase functions new <name>` and commit the folder. The next push to `main` deploys every function in the repo. The workflow passes `--prune --yes`, which deletes hosted functions that no longer have a folder in the repo.
+
+Both pipeline files can be accessed and edited via the .github/worflows file.
 
 To try the database locally, install the [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started), then run `supabase start` and `supabase db reset` from this repo.
 
 ## Deployment to Vercel
 
-Email confirmation and password reset need your app URLs allowed in [URL configuration](https://supabase.com/dashboard/project/_/auth/url-configuration). Add `http://localhost:3000/**`, your production URL, and `https://*-.vercel.app/**` for preview deploys. Supabase documents that pattern in [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls#vercel-preview-urls). Migrations and functions still go out from GitHub Actions on `main`.
+The last step for the project to be ready to deploy is the auth configuration on Supabase. Email confirmation and password reset need your app URLs allowed in [URL configuration](https://supabase.com/dashboard/project/_/auth/url-configuration). Add `http://localhost:3000/**`, your production URL, and `https://*-.vercel.app/**` for preview deploys. Supabase documents that pattern in [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls#vercel-preview-urls). Migrations and functions still go out from GitHub Actions on `main`.
