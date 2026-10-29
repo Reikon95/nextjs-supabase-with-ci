@@ -2,11 +2,12 @@
 
 This repo aims to take [Vercel's excellent template repo](https://github.com/vercel/next.js/tree/canary/examples/with-supabase) as a starting point and improve it to make it a fully production ready system for ongoing development. The initial repo comes with a recommended best practice NextJS boilerplate, with best practices for Supabase auth built in.
 
-This Repo is currently a work in progress. Do not use it yet.
 
 The aim is to create a recommended setup for NextJS + Supabase with versioned migrations and edge functions. Pushing to `main` runs two GitHub Actions: one applies the SQL migrations, and one deploys the edge functions.
 
 ## Getting Started
+
+This repo is enabled as a template. Just use the "use template" option to get a copy of the repo under your Github account, either public or private.
 
 1. Create your Supabase project [here](https://supabase.com/dashboard).
 2. Once created, copy the .env values from the connect tab under NextJS in the [Supabase dashboard](https://supabase.com/dashboard/project/_?showConnect=true). Copy the `.env.example` file to `.env.local`, and paste the contents in there. `.env.local` is not tracked in git.
@@ -45,3 +46,14 @@ To try the database locally, install the [Supabase CLI](https://supabase.com/doc
 ## Deployment to Vercel
 
 The last step for the project to be ready to deploy is the auth configuration on Supabase. Email confirmation and password reset need your app URLs allowed in [URL configuration](https://supabase.com/dashboard/project/_/auth/url-configuration). Add `http://localhost:3000/**`, your production URL, and `https://*-.vercel.app/**` for preview deploys. Supabase documents that pattern in [Redirect URLs](https://supabase.com/docs/guides/auth/redirect-urls#vercel-preview-urls). Migrations and functions still go out from GitHub Actions on `main`.
+
+## More from me
+
+If you want to see more of what I'm working on:
+
+- [X](https://x.com/CamBlackwood95)
+- [GitHub](https://github.com/Reikon95)
+- [LinkedIn](https://www.linkedin.com/in/cameron-blackwood/)
+- [Blog](https://www.cameronblackwood.xyz/blog)
+
+
