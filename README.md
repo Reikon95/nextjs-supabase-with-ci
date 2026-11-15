@@ -13,18 +13,26 @@ This repo is enabled as a template. Just use the "use template" option to get a 
 
 The app reads `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
 
-3. Install dependencies and start the app:
+3. Optional, but recommended: run Supabase locally so you are not testing against production. You need [Docker](https://docs.docker.com/get-docker/) and the [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started) installed. From this repo, run:
+
+   ```bash
+   supabase start
+   ```
+
+   The first run downloads the images. When it finishes, the CLI prints a local project URL and publishable key. Put those in `.env.local` in place of the hosted values from the step above.
+
+4. Install dependencies and start the app:
 
    ```bash
    npm install
    npm run dev
    ```
 
-4. Create an access token for this project in your [Supabase account settings](https://supabase.com/dashboard/account/tokens). Scope it to this project only for security reasons.
+5. Create an access token for this project in your [Supabase account settings](https://supabase.com/dashboard/account/tokens). Scope it to this project only for security reasons.
 
 The migrations workflow runs `supabase link` before it pushes, so the token needs Project Settings, API Keys, and API Key Secrets, all with Read. Edge function deploys need Edge Functions with Read-write as well, because the workflow can delete functions that are no longer in the repo. Permission names are the ones on that token screen. See [Personal access tokens](https://supabase.com/docs/guides/platform/personal-access-tokens).
 
-5. Add these secrets on the GitHub repo so the workflows can run:
+6. Add these secrets on the GitHub repo so the workflows can run:
 
 - `SUPABASE_ACCESS_TOKEN`, the token from the step above
 - `SUPABASE_PROJECT_ID`, the project ref in `https://supabase.com/dashboard/project/<project-ref>`. You can also find it in the [General settings](https://supabase.com/dashboard/project/_/settings/general)
@@ -42,7 +50,7 @@ The edge function in `supabase/functions/hello-world` is a small example. It exp
 
 Both pipeline files can be accessed and edited via the .github/workflows folder.
 
-To try the database locally, install the [Supabase CLI](https://supabase.com/docs/guides/local-development/cli/getting-started), then run `supabase start` and `supabase db reset` from this repo.
+With the local stack from Getting Started already running, `supabase db reset` reapplies the migrations in this repo onto that database.
 
 ## Deployment to Vercel
 
